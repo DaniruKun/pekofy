@@ -20,9 +20,7 @@
 (defun terminator-word-p (word)
   "Predicate for a word being a block terminator."
   (let* ((last-char (char word (- (length word) 1))))
-	(or (eq #\. last-char)
-		(eq #\! last-char)
-		(eq #\? last-char))))
+	(find last-char ".?!")))
 
 (defun tokenize (input)
   "Produces a sequence of tokens from the given input."
