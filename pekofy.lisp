@@ -13,14 +13,14 @@
 (defun pekofy-word (word)
   "Pekofy a word with a punctuator in the end. E.g. \"dog.\" -> \"dog peko.\" "
   (let* ((word-len (length word))
-		 (bare-word (subseq word 0 (- word-len 1)))
-		 (punct (subseq word (- word-len 1) word-len)))
-	(concatenate 'string bare-word " peko" punct)))
+         (bare-word (subseq word 0 (- word-len 1)))
+         (punct (subseq word (- word-len 1) word-len)))
+    (concatenate 'string bare-word " peko" punct)))
 
 (defun terminator-word-p (word)
   "Predicate for a word being a block terminator."
   (let* ((last-char (char word (- (length word) 1))))
-	(find last-char ".?!")))
+    (find last-char ".?!")))
 
 (defun tokenize (input)
   "Produces a sequence of tokens from the given input."
@@ -29,11 +29,11 @@
 (defun pekofy (input)
   "Pekofies the given input by adding a peko to the end of each sentence."
   (let* ((tokens (tokenize input))
-		 (processed-words (mapcar (lambda (word)
-									(if (terminator-word-p word)
-										(pekofy-word word)
-										word)) tokens)))
-	(format t "~{~A~^ ~}" processed-words)))
+         (processed-words (mapcar (lambda (word)
+                                    (if (terminator-word-p word)
+                                        (pekofy-word word)
+                                        word)) tokens)))
+    (format t "~{~A~^ ~}" processed-words)))
 
 ;;;; CLI ----------------------------------------------------------------------
 (defparameter *help*
