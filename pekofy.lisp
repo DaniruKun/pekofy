@@ -1,14 +1,13 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (ql:quickload '(:with-user-abort :adopt) :silent t))
+  (ql:quickload '() :silent t))
 
 (defpackage :pekofy
   (:use :cl)
-  (:export :toplevel *ui*))
+  (:export :toplevel :pekofy))
 
 (in-package :pekofy)
 
 ;;;; Config -------------------------------------------------------------------
-(defparameter *default-name* "World")
 
 (defun pekofy-word (word)
   "Pekofy a word with a punctuator in the end. E.g. \"dog.\" -> \"dog peko.\" "
@@ -32,46 +31,12 @@
          (processed-words (mapcar (lambda (word)
                                     (if (terminator-word-p word)
                                         (pekofy-word word)
-                                        word)) tokens)))
+                                        word))
+								  tokens)))
     (format t "~{~A~^ ~}" processed-words)))
 
 ;;;; CLI ----------------------------------------------------------------------
-(defparameter *help*
-  (adopt:make-option 'help
-    :help "display help and exit"
-    :long "help"
-    :short #\h
-    :reduce (constantly t)))
-
-(defparameter *name*
-  (adopt:make-option 'name
-    :help (format nil "say hello to NAME (default ~A)" *default-name*)
-    :long "name"
-    :short #\n
-    :parameter "NAME"
-    :initial-value *default-name*
-    :reduce #'adopt:last))
-
-
-;;;; User Interface ----------------------------------------------
-(defmacro exit-on-ctrl-c (&body body)
-  `(handler-case (with-user-abort:with-user-abort (progn ,@body))
-     (with-user-abort:user-abort () (sb-ext:exit :code 130))))
-
-(defparameter *ui*
-  (adopt:make-interface
-   :name "pekofy"
-   :summary "Example"
-   :usage "Usage"
-   :help "An example program to show how to make well-behaved CLI tools in Common Lisp."
-    :examples '(("Say hello:" . "example")
-                ("Say hello to Alice:" . "example --name Alice"))
-    :contents (list *help* *name*)))
 
 (defun toplevel ()
   (sb-ext:disable-debugger)
-  (exit-on-ctrl-c
-    (multiple-value-bind (arguments options) (adopt:parse-options-or-exit *ui*)
-       ; Handle options.
-      (handler-case (pekofy (first arguments))
-        (user-error (e) (adopt:print-error-and-exit e))))))
+  (pekofy (second sb-ext:*posix-argv*)))
