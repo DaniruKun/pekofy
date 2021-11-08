@@ -27,3 +27,12 @@ You can build a native binary for your platform using the script [[file:build-bi
 - [[http://www.sbcl.org][SBCL]]
 
 If you don't want to build a release yourself, you can grab one from releases for macOS (darwin).
+
+** Microbenchmark
+
+#+begin_example
+time ./pekofy "$teststring"
+Hololive is a group of virtual YouTubers created by Cover Corp peko. The group features dozens of Virtual Reality girls who livestream individually on their own channels, as well as a YouTube series where characters get into bizarre and vaguely sexual situations peko. While the overall goal is to promote Hololive as an Idol agency, including holding concerts and performances, each member works in various mediums such as music, art, and gaming peko../pekofy "$teststring"
+
+0.01s user 0.02s system 32% cpu 0.076 total
+#+end_example
