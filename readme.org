@@ -1,0 +1,29 @@
+* About
+
+~pekofy~ is a toy implementation of the famous Reddit bot [[https://www.reddit.com/user/pekofy_bot/][pekofy_bot]]. It takes any string input as an argument (e.g. several sentences) and produced a "pekofied" output and stdout.
+
+** Usage
+
+#+begin_src shell
+./pekofy "Give me your yubis."
+#+end_src
+
+** Example
+
+#+begin_example
+$ ./pekofy "Hololive is a group of virtual YouTubers created by Cover Corp. The group features dozens of Virtual Reality girls who livestream individually on their own channels, as well as a YouTube series where characters get into bizarre and vaguely sexual situations. While the overall goal is to promote Hololive as an Idol agency, including holding concerts and performances, each member works in various mediums such as music, art, and gaming."
+
+Hololive is a group of virtual YouTubers created by Cover Corp peko. The group features dozens of Virtual Reality girls who livestream individually on their own channels, as well as a YouTube series where characters get into bizarre and vaguely sexual situations peko. While the overall goal is to promote Hololive as an Idol agency, including holding concerts and performances, each member works in various mediums such as music, art, and gaming peko.
+#+end_example
+
+** Build
+You can build a native binary for your platform using the script [[file:build-binary.sh][build-binary.sh]].
+
+#+begin_src shell
+./build-binary.sh "pekofy.lisp"
+#+end_src
+
+*** Prerequisites
+- [[http://www.sbcl.org][SBCL]]
+
+If you don't want to build a release yourself, you can grab one from releases for macOS (darwin).

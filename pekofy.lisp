@@ -1,5 +1,4 @@
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (ql:quickload '() :silent t))
+(eval-when (:compile-toplevel :load-toplevel :execute))
 
 (defpackage :pekofy
   (:use :cl)
@@ -25,14 +24,20 @@
   "Produces a sequence of tokens from the given input."
   (uiop:split-string input :separator " "))
 
+(defun sanitize (input)
+  "Sanitize the input from CLI."
+  (string-trim '(#\Space #\Newline #\Backspace #\Tab 
+                 #\Linefeed #\Page #\Return #\Rubout)
+               input))
+
 (defun pekofy (input)
   "Pekofies the given input by adding a peko to the end of each sentence."
-  (let* ((tokens (tokenize input))
+  (let* ((tokens (tokenize (sanitize input)))
          (processed-words (mapcar (lambda (word)
                                     (if (terminator-word-p word)
                                         (pekofy-word word)
                                         word))
-								  tokens)))
+                                  tokens)))
     (format t "~{~A~^ ~}" processed-words)))
 
 ;;;; CLI ----------------------------------------------------------------------
