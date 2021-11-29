@@ -27,9 +27,10 @@
 
 (defun pekofy-word (word)
   "Pekofy a WORD."
-  (if (terminator-word-p word)
-      (pekofy-word-terminator word)
-      (pekofy-word-co word)))
+  (apply (if (terminator-word-p word)
+             #'pekofy-word-terminator
+             #'pekofy-word-co)
+         (list word)))
 
 (defun pekofiable-p (word)
   "Predicate for if a WORD is pekofiable"
